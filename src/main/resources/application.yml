@@ -1,0 +1,23 @@
+generate-data: true
+
+calculation-policies:
+  validate: true
+  entries:
+    COUNT_BASED:
+      - from: '0'
+        to-exclusive: '100'
+        discount: 0
+      - from: '100'
+        to-exclusive: '1000'
+        discount: 1
+      - from: '1000'
+        discount: 5
+    PERCENTAGE_BASED:
+      - from: '0'
+        to-exclusive: '100'
+        discount: 0.1
+      - from: '100'
+        to-exclusive: '1000'
+        discount: 0.2
+      - from: '1000'
+        discount: 0.3

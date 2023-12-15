@@ -1,0 +1,62 @@
+openapi: 3.0.0
+info:
+  title: Price Calculation API
+  description: API for calculating prices based on discount policies
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080  # Update with your actual server URL
+
+paths:
+  /calculate-price:
+    post:
+      summary: Calculate the price based on the provided request
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CalculationRequest'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CalculationResponse'
+
+components:
+  schemas:
+    CalculationRequest:
+      type: object
+      required:
+        - productId
+        - quantity
+        - policy
+      properties:
+        productId:
+          type: string
+          format: uuid
+          description: ID of the product
+        quantity:
+          type: integer
+          format: int64
+          minimum: 1
+          description: Quantity of the product
+        policy:
+          $ref: '#/components/schemas/DiscountPolicy'
+
+    DiscountPolicy:
+      type: string
+      enum:
+        - COUNT_BASED
+        - PERCENTAGE_BASED
+      description: Type of discount policy
+
+    CalculationResponse:
+      type: object
+      properties:
+        price:
+          type: number
+          format: decimal
+          description: Calculated price
+          example: "50.00"
